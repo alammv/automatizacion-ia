@@ -1,0 +1,339 @@
+<!-- Inspirado en: https://www.ibm.com/mx-es/topics/automation -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatización con Inteligencia Artificial</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8faff;
+            color: #1a2332;
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #0b1a2e 0%, #1a3a5c 50%, #0d2137 100%);
+            color: white;
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(52, 152, 219, 0.1) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 12px;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+        }
+
+        #imagen-header {
+            margin: 25px auto 0;
+            max-width: 600px;
+            height: 400px;
+            background: linear-gradient(135deg, #1e4d7a, #2980b9);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* NAV */
+        nav {
+            background: #0d2137;
+            padding: 14px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 22px;
+            font-weight: 500;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: #5dade2; }
+
+        /* CONTAINER */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* SECTIONS */
+        section { padding: 60px 0; }
+
+        section:nth-child(even) { background: #ffffff; }
+
+        section:nth-child(odd) { background: #f0f5fb; }
+
+        h2 {
+            font-size: 2em;
+            color: #0b1a2e;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #1a5276;
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            color: #1a3a5c;
+            margin-bottom: 12px;
+        }
+
+        p { font-size: 1.05em; margin-bottom: 18px; color: #2c3e50; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border-left: 5px solid #1a5276;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .card p { margin-bottom: 0; }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .benefit-item {
+            background: white;
+            border-radius: 14px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .benefit-item:hover { transform: scale(1.03); }
+
+        .benefit-icon {
+            font-size: 2.5em;
+            margin-bottom: 12px;
+        }
+
+        .benefit-item h4 { color: #0b1a2e; margin-bottom: 8px; font-size: 1.1em; }
+
+        .benefit-item p { font-size: 0.95em; margin-bottom: 0; }
+
+        /* VIDEO & AUDIO */
+        #video-section, #audio-section {
+            background: #0b1a2e;
+            border-radius: 16px;
+            padding: 50px 30px;
+            text-align: center;
+            margin-top: 20px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        #video-section h3, #audio-section h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        #video-section p, #audio-section p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0b1a2e;
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+            margin-top: 20px;
+        }
+
+        footer p { color: rgba(255, 255, 255, 0.7); margin-bottom: 6px; font-size: 0.95em; }
+
+        footer .name { font-size: 1.15em; font-weight: 600; color: white; letter-spacing: 1px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8em; }
+            #imagen-header { height: 250px; max-width: 100%; }
+            .grid-2, .benefits { grid-template-columns: 1fr; }
+            nav a { margin: 0 10px; font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Automatización con Inteligencia Artificial</h1>
+        <p>Transformando procesos, potenciando el futuro</p>
+        <div id="imagen-header">
+            <span>Imagen de encabezado — 600 x 400 px</span>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#introduccion">Introducción</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#aplicaciones">Aplicaciones</a>
+        <a href="#multimedia">Multimedia</a>
+    </nav>
+
+    <section id="introduccion">
+        <div class="container">
+            <h2>¿Qué es la Automatización con IA?</h2>
+            <div class="grid-2">
+                <div>
+                    <p>La automatización con inteligencia artificial combina tecnologías de IA como el aprendizaje automático, el procesamiento del lenguaje natural y la visión por computadora para crear sistemas capaces de ejecutar tareas complejas sin intervención humana.</p>
+                    <p>A diferencia de la automatización tradicional, que sigue reglas fijas, la automatización impulsada por IA puede adaptarse, aprender y tomar decisiones basadas en datos en tiempo real.</p>
+                </div>
+                <div>
+                    <p>Desde la atención al cliente con chatbots hasta la optimización de cadenas de suministro, la IA está redefiniendo los límites de lo que las máquinas pueden hacer de forma autónoma.</p>
+                    <p>Las empresas que adoptan estas tecnologías logran mayor eficiencia, reducción de costos y una ventaja competitiva significativa en sus industrias.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="beneficios">
+        <div class="container">
+            <h2>Beneficios Clave</h2>
+            <div class="benefits">
+                <div class="benefit-item">
+                    <div class="benefit-icon">&#9889;</div>
+                    <h4>Eficiencia Operativa</h4>
+                    <p>Automatiza tareas repetitivas y libera talento humano para actividades estratégicas.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">&#128200;</div>
+                    <h4>Decisiones Basadas en Datos</h4>
+                    <p>Los algoritmos de IA analizan grandes volúmenes de información en segundos.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">&#128176;</div>
+                    <h4>Reducción de Costos</h4>
+                    <p>Minimiza errores, acelera procesos y optimiza el uso de recursos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="aplicaciones">
+        <div class="container">
+            <h2>Aplicaciones Prácticas</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Atención al Cliente</h3>
+                    <p>Chatbots y asistentes virtuales que resuelven consultas 24/7 con lenguaje natural, mejorando la experiencia del usuario y reduciendo tiempos de espera.</p>
+                </div>
+                <div class="card">
+                    <h3>Manufactura Inteligente</h3>
+                    <p>Robots autónomos y sistemas de visión artificial que monitorean calidad, predicen fallos y optimizan líneas de producción en tiempo real.</p>
+                </div>
+                <div class="card">
+                    <h3>Finanzas y Banca</h3>
+                    <p>Sistemas de detección de fraude, análisis de riesgos y trading algorítmico que operan con precisión y velocidad imposibles para un humano.</p>
+                </div>
+                <div class="card">
+                    <h3>Logística y Cadena de Suministro</h3>
+                    <p>Plataformas que predicen demanda, optimizan rutas de entrega y gestionan inventarios de forma autónoma.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="multimedia">
+        <div class="container">
+            <h2>Recursos Multimedia</h2>
+            <p style="margin-bottom: 30px;">Explora contenido visual y auditivo sobre automatización con inteligencia artificial.</p>
+
+            <div id="video-section">
+                <h3>&#9654; Sección de Video</h3>
+                <p>Incrusta aquí tu video sobre automatización con IA.</p>
+            </div>
+
+            <div style="height: 30px;"></div>
+
+            <div id="audio-section">
+                <h3>&#9835; Sección de Audio</h3>
+                <p>Incrusta aquí tu archivo MP3 sobre automatización con IA.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p class="name">Alan Raul Jimenez Quispe</p>
+        <p>&copy; 2026 — Automatización con Inteligencia Artificial. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
